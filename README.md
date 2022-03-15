@@ -54,9 +54,9 @@ Access control limits access for the different users. Upon logging in, the syste
 
 
 # Session Protection
-The session key that is used to generate the session ID is renewed every day. When the session key renews, all active sessions become invalidated and users will be logged out. Session ID expires daily to prevent the session ID from being recycled by an attacker. The session ID is matched to the user’s IP address and user agent. The user agent in this case, refers to the browser and device that was used to login into the system. The 2 factors that determine if the session is valid:
-- ip address
-- user agent
+The session key that is used to generate the session ID is renewed every day. When the session key renews, all active sessions become invalidated and users will be logged out. Session ID expires daily to prevent the session ID from being recycled by an attacker. The session ID is matched to the user’s IP address and user agent. The user agent in this case, refers to the browser and device that was used to login into the system. The 2 factors that determine if the session is valid are:
+- IP Address
+- User Agent
 
 If any of these changes, the user will automatically be logged out, protecting against man-in-the-middle attacks or session hijacking.
 
