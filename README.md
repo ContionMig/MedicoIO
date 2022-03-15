@@ -37,7 +37,7 @@ All encryption functions also make use of an IV to add an extra layer of securit
 
 Website Administrators can choose what to encrypt and what not to encrypt by choosing between. Making the encryption system fully dynamic and according to the administrator's needs
 - “BLOB”: Which will encrypt the selected field
-- Anything else: Which will not be encrypted
+- Other Data Types: Which will not be encrypted
 
 
 # 2 Factor Authentication
