@@ -33,14 +33,14 @@ Hashing and encryption mainly uses the `pycryptodome` package. However, the user
 - Encryption: `["aes", "arc4", "des", "blowfish", "cast-128"]`
 - Hashing: `["md5", "sha1", "sha256", "sha384", "sha512", "sha3_224", "sha3_256", "sha3_384", "sha3_512"]`
 
-All encryption functions also make use of an IV to add an extra layer of security. The keys are generated using a basic algorithm that takes table names and user ID into account, this allows every key used to be generated dynamically. Website Administrators can choose what to encrypt and what not to encrypt by choosing between. Making the encryption system fully dynamic and according to the administrator's needs
+All encryption functions also make use of an IV to add an extra layer of security. The keys are generated using a basic algorithm that takes table names and user ID into account, this allows every key used to be generated dynamically. Website Administrators can choose what to encrypt and what not to encrypt by choosing between them. Making the encryption system fully dynamic and according to the administrator's needs.
 - “BLOB”: Which will encrypt the selected field
 - Other Data Types: Which will not be encrypted
 
 
 # 2 Factor Authentication
 ![2factor](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_12-min.png?raw=true)
-Implemented 2 Factor Authentication for patients who want to log in to see their personal information. Users can use the Google Authenticator App or Twilio Authy App to authenticate themselves. 
+Implementation of 2 Factor Authentication for users. Users can use the Google Authenticator App or Twilio Authy App to authenticate themselves. This is supported by `PyOTP` ans should be relatively easy to understand. One good addon would be recovery codes, allowing the users to disable their 2FA using some randomly generated codes.
 
 # Authentication & Access Controls
 Access control limits access for the different users. Upon logging in, the system checks the user level that is assigned to the user account. Each user level has specific page access assigned to it. Only Admins will have access to the access control page. Admins can give or remove specific page access to a specific user level.
@@ -58,7 +58,7 @@ The session key that is used to generate the session ID is renewed every day. Wh
 - ip address
 - user agent
 
-If any of these changes, the user will automatically be logged out. Protecting against man-in-the-middle attacks or session hijacking.
+If any of these changes, the user will automatically be logged out, protecting against man-in-the-middle attacks or session hijacking.
 
 
 # TO-DO
