@@ -1,0 +1,49 @@
+{
+    "secret_key": "CHANGE_ME",
+    "session_life": 5,
+    
+    "violation_timeout": 30,
+
+    "website": {
+        "profile_pictures": "static/images/default_pfp",
+        "default_access": ["-1", "0", "1", "2"]
+    },
+
+    "blogs": {
+
+    },
+
+    "database": {
+        "path": "database/database.sqlite",
+        "backup": "database/backup/",
+        "key": "CHANGE_ME"
+    },
+    "shelve": {
+        "path": "database/site.sqite"
+    },
+    "encryption": {
+        "hashes": ["md5", "sha1", "sha256", "sha384", "sha512", "sha3_224", "sha3_256", "sha3_384", "sha3_512"],
+        "encrypt": ["aes", "arc4", "des", "blowfish", "cast-128"]
+    },
+    "defaults": {
+        "max_log": 15,
+        "max_pat": 15,
+        "pass_hash": "sha512",
+        "database_hash": "sha1",
+        "userbase_hash": "sha256",
+        "id_length": 512,
+        "userid_masking": "shuffle",
+        "encryption_keyiv": "hashing",
+        "hashing_layers": 1,
+        "salt_length": 128,
+        "layer_algo": "sha3_512",
+        "user_rention": 12,
+        "image_rention": 12,
+        "consultation_rention": 12
+    },
+
+    "reCAPTCHA": {
+        "site_key": "", 
+        "Secret_key": ""
+    }
+}
