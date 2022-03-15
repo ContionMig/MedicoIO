@@ -1,0 +1,11 @@
+.backupactiontag {
+    padding: 0px;
+}
+
+td.timestampheader {
+    border-style: solid;
+}
+
+td {
+    border-width: 1px;
+}
