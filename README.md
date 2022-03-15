@@ -1,7 +1,7 @@
 # MedicoIO
 [[My Website]](https://mitsuzi.xyz/)
 
-MedicoIO is a database security course project focused on protecting, encrypting, and handling data. It offers many configurations which allow the users to choose different encryption & hashing functions, ID lengths, anti brute force methods, and many others. Its main aim is to keep damages from database leakage as low as possible. This was done by using different encryption keys wherever possible. Each row is encrypted using a different key and each table is encrypted using a different set of keys. The flexible configuration makes it extremely hard to brute force even if the source code was obtained.
+MedicoIO is a database security course project focused on protecting, encrypting, and handling data. It offers many configurations which allow the users to choose different encryption & hashing functions, ID lengths, anti brute force methods, and many others. Its main aim is to keep damages from database leakage as low as possible. This was done by using different encryption keys wherever possible. Each row is encrypted using different key and each table is encrypted using a different set of keys. The flexible configuration makes it extremely hard to brute force even if the source code was obtained.
 
 # Screenshots
 ![main](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_2-min.png?raw=true)
