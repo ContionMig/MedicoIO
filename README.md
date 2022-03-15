@@ -15,13 +15,17 @@ MedicoIO is a database security course project focused on protecting, encrypting
 - Authentication & Access Controls
 - Session Protection
 
+
+
 # Backup & Restore Database
 ![backup](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_11-min.png?raw=true)
 Backing up and Restoring can be made with one click. All backups are stored locally under `database/backups` with the creation timestamp. It does back up the entire database and restores it without the need to restart the server however, there aren't much of edge checks and error handling.
 
+
 # Data Masking
 ![masking](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_3-min.png?raw=true)
 Extremely basic data masking blocks most of the sensitive information. It just displays the last 4 characters and 1st characters using Flask's filters. It is extremely basic but does get the job done. The user's ID is also generated using their NRIC which gets hashed however, it does exist encrypted in one other table. 
+
 
 # Database Encryption & Decryption
 ![encryption](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_11-min.png?raw=true)
@@ -35,6 +39,7 @@ Website Administrators can choose what to encrypt and what not to encrypt by cho
 - “BLOB”: Which will encrypt the selected field
 - Anything else: Which will not be encrypted
 
+
 # 2 Factor Authentication
 ![2factor](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_12-min.png?raw=true)
 Implemented 2 Factor Authentication for patients who want to log in to see their personal information. Users can use the Google Authenticator App or Twilio Authy App to authenticate themselves. 
@@ -47,6 +52,7 @@ Access control limits access for the different users. Upon logging in, the syste
 - The patient level (2): Patients to view their personal records
 - The doctor level (1): Doctors to upload and update patient medical records
 - The admin level (0): Admins to create, update and delete users
+
 
 
 # Session Protection
