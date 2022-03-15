@@ -1,0 +1,32 @@
+<form action="{{ url_for('admin_purge') }}" method="POST">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <div class="col">
+        <div class="form-outline">  
+
+            <input type="hidden" name="purge_type" value="{{purge_type}}">
+            <input type="hidden" name="purge_level" value="{{purge_level}}">
+
+            <label class="form-label" for="purge_dur">Purge Logs</label> <br>
+            <select name="purge_dur" class="form-select" aria-label="Default select example" style="width: 94%; float:left;">
+                <option selected>Open this select menu</option>
+                <option value="1800">30 Mins</option>
+                <option value="10800">3 Hours</option>
+                <option value="86400">1 Day</option>
+                <option value="604800">7 Days</option>
+                <option value="2419200">1 Month</option>
+                <option value="7257600">3 Month</option>
+                <option value="29030400">1 Year</option>
+                <option value="99030400">Lifetime</option>
+            </select>
+
+            <div style="float: right;">
+                <button  type="submit" class="btn btn-danger" >Purge</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
