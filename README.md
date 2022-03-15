@@ -33,9 +33,7 @@ Hashing and encryption mainly uses the `pycryptodome` package. However, the user
 - Encryption: `["aes", "arc4", "des", "blowfish", "cast-128"]`
 - Hashing: `["md5", "sha1", "sha256", "sha384", "sha512", "sha3_224", "sha3_256", "sha3_384", "sha3_512"]`
 
-All encryption functions also make use of an IV to add an extra layer of security. The keys are generated using a basic algorithm that takes table names and user id into account. This allows every key used to be generated dynamically 
-
-Website Administrators can choose what to encrypt and what not to encrypt by choosing between. Making the encryption system fully dynamic and according to the administrator's needs
+All encryption functions also make use of an IV to add an extra layer of security. The keys are generated using a basic algorithm that takes table names and user ID into account, this allows every key used to be generated dynamically. Website Administrators can choose what to encrypt and what not to encrypt by choosing between. Making the encryption system fully dynamic and according to the administrator's needs
 - “BLOB”: Which will encrypt the selected field
 - Other Data Types: Which will not be encrypted
 
@@ -64,5 +62,6 @@ If any of these changes, the user will automatically be logged out. Protecting a
 
 
 # TO-DO
-- Edge Cases
+- Edge Cases & Error Handling
 - Messy Code - It was a course project
+- UI - I honestly passionately dislike CSS 
