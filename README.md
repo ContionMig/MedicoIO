@@ -60,6 +60,11 @@ The session key that is used to generate the session ID is renewed every day. Wh
 
 If any of these changes, the user will automatically be logged out, protecting against man-in-the-middle attacks or session hijacking.
 
+# Anti-Spam Features
+- Google reCaptcha is added to prevent any bot spam
+- Cross-Site Request Forgery Prevention measures are set in place
+- All pages has also been rate limited, to prevent spam=
+
 
 # TO-DO
 - Edge Cases & Error Handling
