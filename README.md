@@ -19,7 +19,7 @@ MedicoIO is a database security course project focused on protecting, encrypting
 
 # Backup & Restore Database
 ![backup](https://github.com/ContionMig/MedicoIO/blob/main/showcase/Screenshot_11-min.png?raw=true)
-Backing up and Restoring can be made with one click. All backups are stored locally under `database/backups` with the creation timestamp. It does back up the entire database and restores it without the need to restart the server however, there aren't much of edge checks and error handling.
+Backing up and Restoring can be done within a single click. All backups are stored locally under `database/backups` with the creation timestamp. It does back up the entire database and restores it without the need to restart the server however, there aren't much of edge checks and error handling.
 
 
 # Data Masking
