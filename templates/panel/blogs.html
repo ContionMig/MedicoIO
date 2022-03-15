@@ -1,0 +1,49 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Blogs
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Blogs/Updates</h2>
+    <small class="text-muted">You can view posted blogs and udpates </small>
+</div>
+
+
+
+<div class="row mb-2">
+
+    {%for i in range(0, blogs|len)%}
+
+    <div class="col-md"  style="min-width: 30%;">
+        <div class="card">
+            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="{{ url_for('show_blog_image', blogid=blogs[i].id()) }}" class="img-fluid" />
+                <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+            </div>
+            <div class="card-body">
+                <strong class="d-inline-block mb-2 text-primary">{{ blogs[i].get_category() }}</strong>
+                <h3 class="mb-0">
+                    <span class="text-dark" href="#">{{ blogs[i].get_post_title()|blog_title }}</span>
+                </h3>
+                <div class="mb-1 text-muted">{{ blogs[i].get_timestamp()|strftime_locale }}</div>
+                <p class="card-text mb-auto">{{ blogs[i].get_content()|blog_preview|htmlclean }}.</p> <br>
+                <a href="{{ url_for('view_post', blogid=blogs[i].id()) }}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

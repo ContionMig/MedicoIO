@@ -1,0 +1,115 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | View Patients
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="block-header">
+        <h2>View Medical Document</h2>
+        <small class="text-muted">View your medical records</small>
+        <br>
+</div>
+
+<div class="row">
+    <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                            class="rounded-circle mt-5" width="150px"
+                            src="{{ url_for('show', uid=user.id()) }}"><span
+                            class="font-weight-bold">Edogaru</span><span
+                            class="text-black-50">{{user.details.get_email()}}</span><span>
+                    </span></div>
+    </div>
+    <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Name</label>
+                                    <input type="text" class="form-control" placeholder="first name"
+                                            value="{{user.details.get_fname()}}" readonly>
+                            </div>
+                            <div class="col-md-6"><label class="labels">Surname</label>
+                                    <input type="text" class="form-control"
+                                            value="{{user.details.get_lname()}}"
+                                            placeholder="surname" readonly>
+                            </div>
+                    </div>
+                    <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Mobile
+                                            Number</label>
+                                    <input type="text" class="form-control"
+                                            placeholder="enter phone number"
+                                            value="+65 {{user.details.get_contact()}}" readonly>
+                            </div> <br>
+                            <br>
+                            <div class="col-md-12"><label class="labels">Email
+                                            ID</label><input type="text" class="form-control"
+                                            placeholder="enter email id"
+                                            value="{{user.details.get_email()}}" readonly>
+                            </div>
+                            <div class="col-md-12"><label class="labels">Gender</label><input
+                                            type="text" class="form-control" placeholder="education"
+                                            value="{{user.details.get_gender()}}" readonly>
+                            </div>
+                            <div class="col-md-12"><label class="labels">Date of
+                                            Birth</label><input type="text" class="form-control"
+                                            placeholder="education"
+                                            value="{{user.details.get_dob()}}" readonly>
+                            </div>
+                            <div class="col-md-12"><label class="labels">Blood
+                                            Type</label><input type="text" class="form-control"
+                                            placeholder="education"
+                                            value="{{user.details.get_blood()}}" readonly>
+                            </div>
+                            <div class="col-md-12"><label class="labels">Area</label><input
+                                            type="text" class="form-control"
+                                            value="{{user.details.get_area()}}" readonly>
+                            </div>
+                    </div>
+
+                    <div class="row mt-3">
+                            <div class="col-md-6"><label class="labels">Apt/Unit</label>
+                                    <input type="text" class="form-control"
+                                            value="{{user.details.get_addr()|mask}}" readonly>
+                            </div>
+                            <div class="col-md-6"><label class="labels">Postal Code</label>
+                                    <input type="text" class="form-control"
+                                            value="{{user.details.get_postal_code()|mask}}" readonly>
+                            </div>
+                    </div>
+            </div>
+    </div>
+    <div class="col-md-4">
+
+            <div class="p-3 py-5">
+
+                    <div class="row mt-3">
+                            <div class="col-md-6"><label class="labels">Height</label>
+                                    <input type="text" class="form-control"
+                                            value="{{user.details.get_height()}} cm" readonly>
+                            </div>
+                            <div class="col-md-6"><label class="labels">Weight</label>
+                                    <input type="text" class="form-control"
+                                            value="{{user.details.get_weight()}} kg" readonly>
+                            </div>
+                    </div> <br>
+
+
+                    <div class="col-md-12"><label class="labels">Blood Type</label>
+                            <input type="text" class="form-control"
+                                    value="{{user.details.get_blood()}}" readonly>
+                    </div>
+            </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

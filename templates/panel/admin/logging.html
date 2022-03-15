@@ -1,0 +1,83 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Admin Panel | Logging
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Recorded Event Logs</h2>
+    <small class="text-muted">Table of logs recorded since session started.</small>
+</div>
+
+<form action="{{ url_for('admin_logs') }}" method="GET">
+
+    <div class="col">
+        <div class="form-outline">
+            <label class="form-label" for="log_level">Filter Logs</label> <br>
+            <select name="log_level" class="form-select" aria-label="Default select example" style="width: 94%; float:left;">
+                <option selected>Open this select menu</option>
+                <option value="0">LOG_EMERG</option>
+                <option value="1">LOG_ALERT</option>
+                <option value="2">LOG_CRIT</option>
+                <option value="3">LOG_ERR</option>
+                <option value="4">LOG_WARNING</option>
+                <option value="5">LOG_NOTICE</option>
+                <option value="6">LOG_INFO</option>
+                <option value="7">LOG_DEBUG</option>
+            </select>
+
+            <div style="float: right;">
+                <button  type="submit" class="btn btn-primary" >Filter</button>
+            </div>
+
+        </div>
+        <br>
+
+    </div>
+
+</form>
+
+<br><br>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th scope="col">ID</th>
+            <th scope="col">Error Level</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Timestamp</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        {%for i in range(0, all_logs|len)%}
+
+        <tr>
+            <th scope="row">{{ i }}</th>
+            <td>{{ all_logs[i].get_err_level()|err_title }}</td>
+            <td>{{ all_logs[i].get_title() }}</td>
+            <td>{{ all_logs[i].get_description() }}</td>
+            <td>{{ all_logs[i].get_timestamp()|timec }}</td>
+        </tr>
+
+        {%endfor%}
+
+    </tbody>
+</table>
+
+{% with purge_type="logs", purge_level=0 %}
+    {% include 'includes/purge_logs.html' %}
+{% endwith %}
+
+<br><br><br>
+
+{% endblock %}

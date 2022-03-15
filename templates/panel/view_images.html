@@ -1,0 +1,65 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Scans
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>View Scans</h2>
+    <small class="text-muted">View past scans/images here</small>
+    <br>
+</div>
+
+<form method="GET" class="form-inline my-2 my-lg-0">
+    
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <small>Filter Scans</small><br>
+
+    <select name="search" class="form-select" aria-label="Default select example" style="width: 90%; float:left;">
+        <option value="X-Ray">X-Ray</option>
+        <option value="Ultrasound">ultrasound</option>
+        <option value="Computed Tomography (CT)">Computed Tomography (CT)</option>
+        <option value="Magnetic Resonance Imaging (MRI)">Magnetic Resonance Imaging (MRI)</option>
+        <option value="Positron Emission Tomography (PET)">Positron Emission Tomography (PET)</option>
+    </select>
+
+    <button style="width: 10%; padding-left: 2px; height: 34px;" class="btn btn-outline-success my-2 my-sm-0"
+        type="submit">Search</button>
+</form> <br><br>
+
+
+<div class="row mb-2">
+
+    {%for x in range(0, images|len)%}
+
+    <div class="col-md"  style="min-width: 30%; max-width: 30%;">
+        <div class="card">
+            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="{{ url_for('show_image', imacon=images[x].id()) }}" class="img-fluid" />
+                <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+            </div>
+            <div class="card-body">
+                <strong class="d-inline-block mb-2 text-primary">{{ images[x].get_catergory() }}</strong> <br>
+
+                    <p class="text-dark">{{ images[x].get_description() }}</p>
+                </h3>
+                <div class="mb-1 text-muted">Uploaded on {{ images[x].get_time_taken() }} | By Dr. {{ sys.approved_doctor(images[x].id()) }}</div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,428 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Admin Panel | Site Settings
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="block-header">
+    <h2>Site Settings</h2>
+    <small class="text-muted">Update the Site Settings here</small>
+</div>
+
+
+<ul class="nav nav-tabs">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#item_display">Items Displays</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#database_settings">Database Settings</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#data_rention">Data Retention</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#pas_pol">Password Policy</a>
+    </li>
+
+</ul>
+
+<div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="item_display">
+        <br><br>
+        <form action="{{ url_for('admin_site_settings') }}" method="POST">
+
+            <input type="hidden" name="set_type" value="items">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="max_log">Max Logs ( Per Page )</label>
+                <input value="{{ site.get_max_log() }}" name="max_log" type="number" id="max_log"
+                    class="form-control" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="max_pat">Max Users ( Per Page )</label>
+                <input value="{{ site.get_max_pat() }}" name="max_pat" type="number" id="max_pat"
+                    class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Update Settings</button>
+        </form>
+    </div>
+
+
+    <div class="tab-pane fade show" id="database_settings">
+        <br><br>
+        <form action="{{ url_for('admin_site_settings') }}" method="POST">
+
+            <input type="hidden" name="set_type" value="database">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <h6>Securing Passwords</h6>
+            <small>Settings to secure passwords stored in the database</small>
+            <hr>
+
+            <div class="form-outline">
+                <label class="form-label" for="pass_hash">Password Hashing</label>
+                <select value="{{site.get_pass_hash()}}" name="pass_hash" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, hashes|len)%}
+
+                    {% if hashes[i] == site.get_pass_hash() %}
+                    <option value="{{hashes[i]}}" selected>{{hashes[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{hashes[i]}}">{{hashes[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="salt_length">Password Salt Length</label>
+                <input value="{{ site.get_salt_length() }}" name="salt_length" type="number" id="salt_length"
+                    class="form-control" />
+            </div>
+
+            <br>
+            <h6>Securing Database</h6>
+            <small>Settings to secure all encrypted and unencrypted data in the database</small>
+            <hr>
+
+
+            <div class="form-outline">
+                <label class="form-label" for="userbase_hash">User Data Hashing</label>
+                <select value="{{site.get_userbase_hash()}}" name="userbase_hash" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, hashes|len)%}
+
+                    {% if hashes[i] == site.get_userbase_hash() %}
+                    <option value="{{hashes[i]}}" selected>{{hashes[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{hashes[i]}}">{{hashes[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+            <div class="form-outline">
+                <label class="form-label" for="database_hash">Database Hashing</label>
+                <select value="{{ site.get_database_hash() }}" name="database_hash" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, hashes|len)%}
+
+                    {% if hashes[i] == site.get_database_hash() %}
+                    <option value="{{hashes[i]}}" selected>{{hashes[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{hashes[i]}}">{{hashes[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="id_length">Unique ID Length</label>
+                <input value="{{ site.get_id_length() }}" name="id_length" type="number" id="id_length"
+                    class="form-control" />
+            </div>
+
+            <div class="form-outline">
+                <label class="form-label" for="userid_masking">User ID Masking</label>
+                <select name="userid_masking" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_userid_masking() == "shuffle" %} selected {% endif %} value="shuffle">
+                        Shuffle
+                    </option>
+                    <option {% if site.get_userid_masking() == "hashing" %} selected {% endif %} value="hashing">
+                        Shuffle
+                        + Hashing</option>
+                </select>
+            </div> <br>
+
+            <div class="form-outline">
+                <label class="form-label" for="encryption_keyiv">Encryption Key & IV Seed</label>
+                <select name="encryption_keyiv" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_encryption_keyiv() == "shuffle" %} selected {% endif %} value="shuffle">
+                        Shuffle</option>
+                    <option {% if site.get_encryption_keyiv() == "hashing" %} selected {% endif %} value="hashing">
+                        Shuffle + Hashing</option>
+                </select>
+            </div> <br>
+
+            <br>
+            <h6>Securing Hashing</h6>
+            <small>Settings to make hash cracking harder</small>
+            <hr>
+
+            <div class="form-outline">
+                <label class="form-label" for="hashing_layers">Hashing Layers</label>
+                <select name="hashing_layers" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_hashing_layers() == 0 %} selected {% endif %} value="0">None</option>
+                    <option {% if site.get_hashing_layers() == 1  %} selected {% endif %} value="1">Once</option>
+                    <option {% if site.get_hashing_layers() == 2  %} selected {% endif %} value="2">Twice</option>
+                    <option {% if site.get_hashing_layers() == 3  %} selected {% endif %} value="3">Triple</option>
+                </select>
+            </div> <br>
+
+
+            <div class="form-outline">
+                <label class="form-label" for="layer_algo">Layer Algorithm</label>
+                <select value="{{ site.get_layer_algo() }}" name="layer_algo" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, hashes|len)%}
+
+                    {% if hashes[i] == site.get_layer_algo() %}
+                    <option value="{{hashes[i]}}" selected>{{hashes[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{hashes[i]}}">{{hashes[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+
+            <br>
+            <h6>Encryption in Database</h6>
+            <small>Setting to change the encryption methods in the database</small>
+            <hr>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="encryption_key">Secret Key</label>
+                <input value="{{ site.get_encryption_key() }}" name="encryption_key" type="text" id="encryption_key"
+                    class="form-control" />
+            </div>
+
+            <div class="form-outline">
+                <label class="form-label" for="user_encryption">User Table Encryption</label>
+                <select value="{{site.get_user_encryption()}}" name="user_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_user_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+
+            <div class="form-outline">
+                <label class="form-label" for="user_detail_encryption">User Detail Table Encryption</label>
+                <select value="{{site.get_user_detail_encryption()}}" name="user_detail_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_user_detail_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+            
+            <div class="form-outline">
+                <label class="form-label" for="consultations_encryption">Consultation Table Encryption</label>
+                <select value="{{site.get_consultations_encryption()}}" name="consultations_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_consultations_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+
+            <div class="form-outline">
+                <label class="form-label" for="log_encryption">Logging Table Encryption</label>
+                <select value="{{site.get_log_encryption()}}" name="log_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_log_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+
+            <div class="form-outline">
+                <label class="form-label" for="images_encryption">Image Table Encryption</label>
+                <select value="{{site.get_images_encryption()}}" name="images_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_images_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+            <div class="form-outline">
+                <label class="form-label" for="blog_encryption">Blog Table Encryption</label>
+                <select value="{{site.get_blog_encryption()}}" name="blog_encryption" class="form-select"
+                    aria-label="Default select example">
+
+                    {%for i in range(0, encryption|len)%}
+
+                    {% if encryption[i] == site.get_blog_encryption() %}
+                    <option value="{{encryption[i]}}" selected>{{encryption[i]|upper|u_space}}</option>
+                    {% else %}
+                    <option value="{{encryption[i]}}">{{encryption[i]|upper|u_space}}</option>
+                    {% endif %}
+
+                    {%endfor%}
+
+                </select>
+            </div> <br>
+
+
+            <br>
+            <button type="submit" class="btn btn-danger btn-block mb-4">Reset Database</button>
+        </form>
+
+        <br>
+    </div>
+
+
+    <div class="tab-pane fade show" id="data_rention">
+        <br><br>
+        <form action="{{ url_for('admin_site_settings') }}" method="POST">
+
+            <input type="hidden" name="set_type" value="rention">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <div class="form-outline">
+                <label class="form-label" for="user_rention">Inactive Users</label>
+                <select name="user_rention" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_user_rention() == 3 %} selected {% endif %} value="3">3 Months</option>
+                    <option {% if site.get_user_rention() == 6 %} selected {% endif %} value="6">6 Months</option>
+                    <option {% if site.get_user_rention() == 12 %} selected {% endif %} value="12">1 Year</option>
+                    <option {% if site.get_user_rention() == 24 %} selected {% endif %} value="24">2 Year</option>
+                    <option {% if site.get_user_rention() == 60 %} selected {% endif %} value="60">5 Year</option>
+                </select>
+            </div> <br>
+
+
+            <div class="form-outline">
+                <label class="form-label" for="image_rention">Scans/Images</label>
+                <select name="image_rention" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_image_rention() == 3 %} selected {% endif %} value="3">3 Months</option>
+                    <option {% if site.get_image_rention() == 6 %} selected {% endif %} value="6">6 Months</option>
+                    <option {% if site.get_image_rention() == 12 %} selected {% endif %} value="12">1 Year</option>
+                    <option {% if site.get_image_rention() == 24 %} selected {% endif %} value="24">2 Year</option>
+                    <option {% if site.get_image_rention() == 60 %} selected {% endif %} value="60">5 Year</option>
+                </select>
+            </div> <br>
+
+
+
+            <div class="form-outline">
+                <label class="form-label" for="consultation_rention">Consultation</label>
+                <select name="consultation_rention" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_consultation_rention() == 3 %} selected {% endif %} value="3">3 Months</option>
+                    <option {% if site.get_consultation_rention() == 6 %} selected {% endif %} value="6">6 Months</option>
+                    <option {% if site.get_consultation_rention() == 12 %} selected {% endif %} value="12">1 Year</option>
+                    <option {% if site.get_consultation_rention() == 24 %} selected {% endif %} value="24">2 Year</option>
+                    <option {% if site.get_consultation_rention() == 60 %} selected {% endif %} value="60">5 Year</option>
+                </select>
+            </div> <br>
+
+
+
+            <br>
+            <button type="submit" class="btn btn-danger btn-block mb-4">Update Settings</button>
+        </form>
+
+        <br>
+    </div>
+
+
+    <div class="tab-pane fade show" id="pas_pol">
+        <br><br>
+        <form action="{{ url_for('admin_site_settings') }}" method="POST">
+
+            <input type="hidden" name="set_type" value="rention">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            
+
+
+            <div class="form-outline">
+                <label class="form-label" for="users">Inactive Users</label>
+                <select name="users" class="form-select" aria-label="Default select example">
+                    <option {% if site.get_user_rention() == 3 %} selected {% endif %} value="3">3 Months</option>
+                    <option {% if site.get_user_rention() == 6 %} selected {% endif %} value="6">6 Months</option>
+                    <option {% if site.get_user_rention() == 12 %} selected {% endif %} value="12">1 Year</option>
+                    <option {% if site.get_user_rention() == 24 %} selected {% endif %} value="24">2 Year</option>
+                    <option {% if site.get_user_rention() == 60 %} selected {% endif %} value="60">5 Year</option>
+                </select>
+            </div> <br>
+
+            <br>
+            <button type="submit" class="btn btn-danger btn-block mb-4">Update Settings</button>
+        </form>
+
+        <br>
+    </div>
+
+</div>
+
+
+{% endblock %}

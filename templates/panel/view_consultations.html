@@ -1,0 +1,37 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Consultations
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+  <h2>View Consultations</h2>
+  <small class="text-muted">View past consultation report here</small>
+</div>
+
+<div class="row clearfix">
+  {%for x in range(0, consultation|len)%}
+  <div class="card">
+    <div class="card-header">
+      {{ consultation[x].get_c_date() }} {{ consultation[x].get_c_time() }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ consultation[x].get_department() }}</h5>
+      <small>Block {{ consultation[x].get_block()|upper }} - Unit {{ consultation[x].get_unit() }}</small><br><br>
+      <span><strong>Remarks:</strong></span>
+      <p class="card-text"> {{ consultation[x].get_comments() }}</p><br>
+      <span><strong>Approved By:</strong></span>
+      <p class="card-text">Dr. {{ sys.approved_doctor(consultation[x].id()) }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

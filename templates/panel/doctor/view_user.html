@@ -1,0 +1,205 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | View Patients
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="block-header">
+        <h2>View Patients</h2>
+        <small class="text-muted">View existing patients</small>
+        <br>
+</div>
+
+
+<ul class="nav nav-tabs">
+
+        <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#profile">Profile</a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#consultation">Consultation</a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#images">View Scans/Images</a>
+        </li>
+
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="profile">
+
+                <div class="row">
+                        <div class="col-md-3 border-right">
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                                class="rounded-circle mt-5" width="150px"
+                                                src="{{ url_for('show', uid=user.id()) }}"><span
+                                                class="font-weight-bold">Edogaru</span><span
+                                                class="text-black-50">{{user.details.get_email()}}</span><span>
+                                        </span></div>
+                        </div>
+                        <div class="col-md-5 border-right">
+                                <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h4 class="text-right">Profile Settings</h4>
+                                        </div>
+                                        <div class="row mt-2">
+                                                <div class="col-md-6"><label class="labels">Name</label>
+                                                        <input type="text" class="form-control" placeholder="first name"
+                                                                value="{{user.details.get_fname()}}" readonly>
+                                                </div>
+                                                <div class="col-md-6"><label class="labels">Surname</label>
+                                                        <input type="text" class="form-control"
+                                                                value="{{user.details.get_lname()}}"
+                                                                placeholder="surname" readonly>
+                                                </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                                <div class="col-md-12"><label class="labels">Mobile
+                                                                Number</label>
+                                                        <input type="text" class="form-control"
+                                                                placeholder="enter phone number"
+                                                                value="+65 {{user.details.get_contact()}}" readonly>
+                                                </div> <br>
+                                                <br>
+                                                <div class="col-md-12"><label class="labels">Email
+                                                                ID</label><input type="text" class="form-control"
+                                                                placeholder="enter email id"
+                                                                value="{{user.details.get_email()}}" readonly>
+                                                </div>
+                                                <div class="col-md-12"><label class="labels">Gender</label><input
+                                                                type="text" class="form-control" placeholder="education"
+                                                                value="{{user.details.get_gender()}}" readonly>
+                                                </div>
+                                                <div class="col-md-12"><label class="labels">Date of
+                                                                Birth</label><input type="text" class="form-control"
+                                                                placeholder="education"
+                                                                value="{{user.details.get_dob()}}" readonly>
+                                                </div>
+                                                <div class="col-md-12"><label class="labels">Blood
+                                                                Type</label><input type="text" class="form-control"
+                                                                placeholder="education"
+                                                                value="{{user.details.get_blood() }}" readonly>
+                                                </div>
+                                                <div class="col-md-12"><label class="labels">Area</label><input
+                                                                type="text" class="form-control"
+                                                                value="{{user.details.get_area() }}" readonly>
+                                                </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                                <div class="col-md-6"><label class="labels">Apt/Unit</label>
+                                                        <input type="text" class="form-control"
+                                                                value="{{user.details.get_addr()|mask }}" readonly>
+                                                </div>
+                                                <div class="col-md-6"><label class="labels">Postal Code</label>
+                                                        <input type="text" class="form-control"
+                                                                value="{{user.details.get_postal_code()|mask }}" readonly>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+
+                                <div class="p-3 py-5">
+
+                                        <div class="d-flex justify-content-between align-items-center experience">
+                                                <span>Edit Patient</span>
+                                                <span id="edit_user" class="border px-3 p-1 add-experience">
+                                                        <a
+                                                                href="{{ url_for('doc_update', user_id=user.id()) }}">Edit</a>
+                                                </span>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row mt-3">
+                                                <div class="col-md-6"><label class="labels">Height</label>
+                                                        <input type="text" class="form-control"
+                                                                value="{{user.details.get_height()}} cm" readonly>
+                                                </div>
+                                                <div class="col-md-6"><label class="labels">Weight</label>
+                                                        <input type="text" class="form-control"
+                                                                value="{{user.details.get_weight()}} kg" readonly>
+                                                </div>
+                                        </div> <br>
+
+
+                                        <div class="col-md-12"><label class="labels">Blood Type</label>
+                                                <input type="text" class="form-control"
+                                                        value="{{user.details.get_blood()}}" readonly>
+                                        </div>
+                                </div>
+
+
+                        </div>
+                </div>
+
+        </div>
+
+
+        <div class="tab-pane fade show" id="consultation">
+                <br>
+                <div class="row clearfix">
+                        {%for x in range(0, consultation|len)%}
+                        <div class="card">
+                                <div class="card-header">
+                                        {{ consultation[x].get_c_date() }} {{ consultation[x].get_c_time() }}
+                                </div>
+                                <div class="card-body">
+                                        <h5 class="card-title">{{ consultation[x].get_department() }}</h5>
+                                        <small>Block {{ consultation[x].get_block()|upper }} - Unit
+                                                {{ consultation[x].get_unit() }}</small><br><br>
+                                        <span><strong>Remarks:</strong></span>
+                                        <p class="card-text"> {{ consultation[x].get_comments() }}</p><br>
+                                        <span><strong>Approved By:</strong></span>
+                                        <p class="card-text">Dr.
+                                                {{ sys_consultation.approved_doctor(consultation[x].id()) }}</p>
+                                </div>
+                        </div>
+                        {% endfor %}
+                </div>
+        </div>
+
+        <div class="tab-pane fade show" id="images">
+
+                <br>
+                <div class="row mb-2">
+
+                        {%for x in range(0, images|len)%}
+                    
+                        <div class="col-md"  style="min-width: 30%; max-width: 30%;">
+                            <div class="card">
+                                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                    <img src="{{ url_for('show_image', imacon=images[x].id()) }}" class="img-fluid" />
+                                    <a href="#!">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <strong class="d-inline-block mb-2 text-primary">{{ images[x].get_catergory() }}</strong> <br>
+                    
+                                        <p class="text-dark">{{ images[x].get_description() }}</p>
+                                    </h3>
+                                    <div class="mb-1 text-muted">Uploaded on {{ images[x].get_time_taken() }} | By Dr. {{ sys_images.approved_doctor(images[x].id()) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        {% endfor %}
+                    
+                    </div>
+
+        </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Doctor | Consultations
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="block-header">
+        <h2>Add Consultations</h2>
+        <small class="text-muted">File a consultation report here</small>
+</div>
+
+<form action="{{ url_for('doc_consultations') }}" method="POST" enctype="multipart/form-data">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        <div class="form-outline mb-4">
+                <label class="form-label" for="nric">NRIC</label>
+                <input value="" name="nric" type="text" id="nric" class="form-control"/>
+        </div>
+
+        <div class="row mb-4">
+                <div class="col">
+                        <div class="form-outline">
+                                <label class="form-label" for="c_time">Time</label>
+                                <input value="" name="c_time" type="time" id="c_time" class="form-control" />
+                        </div>
+                </div>
+                <div class="col">
+                        <div class="form-outline">
+                                <label class="form-label" for="c_date">Date</label>
+                                <input value="" name="c_date" type="date" id="c_date" class="form-control" />
+                        </div>
+                </div>
+        </div>
+
+        <!-- Text input -->
+        <div class="form-outline mb-4">
+                <label class="form-label" for="comments">Comments</label>
+                <textarea rows="5" value="" name="comments" type="text" id="comments" class="form-control"></textarea>
+        </div>
+
+        <div class="row mb-4">
+                <div class="col">
+                        <div class="form-outline">
+                                <label class="form-label" for="block">Block</label>
+                                <select value="" name="block" class="form-select"
+                                    aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D </option>
+                                    <option value="E">E </option>
+                        </select>
+                        </div>
+                </div>
+                <div class="col">
+                        <div class="form-outline">
+                                <label class="form-label" for="unit">Unit</label>
+                                <input value="" name="unit" type="text" id="unit" class="form-control"  placeholder="E.g. 467"/>
+                        </div>
+                </div>
+        </div>
+
+        <div class="form-outline mb-4">
+                <label class="form-label" for="department">Department</label>
+                <select value="" name="department" class="form-select"
+                    aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="Outpatient Department (Consultation)">Outpatient Department (Consultation)</option>
+                    <option value="Medical Department">Medical Department</option>
+                    <option value="Nursing Department">Nursing Department</option>
+                    <option value="Paramedical Department">Paramedical Department</option>
+                    <option value="Rehabilitation Department">Rehabilitation Department</option>
+                    <option value="Operation Theatre Complex">Operation Theatre Complex</option>
+                    <option value="Radiology Department">Radiology Department</option>
+                    <option value="Dietary Department">Dietary Department</option>
+                    <option value="Counseling">Counseling</option>
+            </select>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Add Consultation</button>
+</form>
+
+
+
+{% endblock %}

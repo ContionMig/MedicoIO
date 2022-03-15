@@ -1,0 +1,49 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Blog Post
+{% endblock %}
+
+{% block links %}
+<style>
+    img {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Page Header -->
+<header class="masthead" style='background-color: #FFFFFF;'>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading" style="padding: 20px;">
+                    <h1>{{ blog.get_post_title() }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="col-lg-8"><br>
+            <strong><span class="meta">Posted by {{ blog.get_author() }} ·
+                    {{blog.get_timestamp()|strftime_locale}}</span></strong><br><br>
+            {{ blog.get_content()|safe }}
+        </div>
+        <div class="col-lg-4 hidden-xs">
+            
+
+        </div>
+    </div>
+</article>
+
+
+{% endblock %}

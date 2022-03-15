@@ -1,0 +1,144 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Upload Images
+{% endblock %}
+
+{% block links %}
+<style>
+    #upload {
+        opacity: 0;
+    }
+
+    #upload-label {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .image-area {
+        border: 2px dashed rgba(255, 255, 255, 0.7);
+        padding: 1rem;
+        position: relative;
+    }
+
+    .image-area::before {
+        content: 'Uploaded image result';
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.8rem;
+        z-index: 1;
+    }
+
+    .image-area img {
+        z-index: 2;
+        position: relative;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h5 class="m-b-0">Upload Scans</i></a></h5>
+    <small>Upload any images or scans here</small>
+</div> <br>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    
+    <div class="form-outline mb-4">
+        <label class="form-label" for="nric">NRIC</label>
+        <input value="" placeholder="T02XXXXXD" name="nric" type="text" id="nric" class="form-control" required/>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="scan_type">Scan Type</label>
+                <select name="scan_type" class="form-select" aria-label="Default select example" required>
+                    <option value="X-Ray">X-Ray</option>
+                    <option value="Ultrasound">ultrasound</option>
+                    <option value="Computed Tomography (CT)">Computed Tomography (CT)</option>
+                    <option value="Magnetic Resonance Imaging (MRI)">Magnetic Resonance Imaging (MRI)</option>
+                    <option value="Positron Emission Tomography (PET)">Positron Emission Tomography (PET)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="time_taken">Time Taken</label>
+                <input name="time_taken" type="date" id="time_taken"class="form-control" required/>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="description">Description</label>
+        <textarea rows="3" value="" name="description" type="text" id="description" class="form-control" required></textarea>
+    </div>
+
+    <div class="input-group">
+        <input accept="image/*" name='image' id="upload" type="file" onchange="readURL(this);"
+            class="form-control border-0" required>
+        <div class="input-group-append">
+            <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+                <i class="fa fa-cloud-upload mr-2 text-muted"></i>
+                <small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+        </div>
+    </div>
+
+    <!-- Uploaded image area-->
+    <div class="image-area mt-4">
+        <img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+    </div>
+
+    {{ recaptcha }} <br>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Upload Scan</button>
+</form>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imageResult')
+                    .attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(function () {
+        $('#upload').on('change', function () {
+            readURL(input);
+        });
+    });
+
+    var input = document.getElementById('upload');
+    var infoArea = document.getElementById('upload-label');
+
+    input.addEventListener('change', showFileName);
+
+    function showFileName(event) {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        infoArea.textContent = 'File name: ' + fileName;
+    }
+</script>
+
+{% endblock %}

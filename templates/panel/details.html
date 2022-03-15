@@ -1,0 +1,129 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Personal Details
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Personal Details</h2>
+    <small class="text-muted">Update your personal details here</small>
+</div>
+
+<form action="{{ url_for('panel_details') }}" method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <!-- 2 column grid layout with text inputs for the first and last names -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="f_name">First name</label>
+                <input value="{{ user.details.get_fname() }}" name="f_name" type="text" id="f_name"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="l_name">Last name</label>
+                <input value="{{ user.details.get_lname() }}" name="l_name" type="text" id="l_name"
+                    class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Text input -->
+    <div class="form-outline mb-4">
+        <label class="form-label" for="nric">NRIC</label>
+        <input value="{{ user.details.get_nric()|upper|mask }}" name="nric" type="text" id="nric" class="form-control"
+            {% if not nric_empty %} readonly {% endif %} />
+    </div>
+
+
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="area">Area</label>
+                <select name="area" class="form-select" aria-label="Default select example">
+                    <option {% if user.details.get_area() == "Central Region" %} selected {% endif %} value="Central Region">Central Region</option>
+                    <option {% if user.details.get_area() == "East Region"  %} selected {% endif %} value="East Region">East Region</option>
+                    <option {% if user.details.get_area() == "North Region"  %} selected {% endif %} value="North Region">North Region</option>
+                    <option {% if user.details.get_area() == "North-East Region"  %} selected {% endif %} value="North-East Region">North-East Region</option>
+                    <option {% if user.details.get_area() == "West Region"  %} selected {% endif %} value="West Region">West Region</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="postal">Postal</label>
+                <input value="{{ user.details.get_postal_code() }}" name="postal" type="number" id="dob" class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="addr">Apt/Unit Number</label>
+                <input value="{{ user.details.get_addr() }}" name="addr" type="text" id="addr" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+        <label class="form-label" for="email">Email</label>
+        <input value="{{ user.details.get_email() }}" name="email" type="email" id="email" class="form-control" />
+    </div>
+
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="contact">Phone</label>
+                <input value="{{ user.details.get_contact() }}" name="contact" type="number" id="contact"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="dob">Date of Birth</label>
+                <input value="{{ user.details.get_dob() }}" name="dob" type="date" id="dob" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="gender">Gender</label>
+                <input value="{{ user.details.get_gender() }}" name="g" type="text" id="gender" class="form-control"
+                    readonly />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="blood">Blood Type</label>
+                <input value="{{ user.details.get_blood()|upper }}" name="bt" type="text" id="blood"
+                    class="form-control" readonly />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="pfp">Select a Profile Picture:</label> <br>
+        <input type="file" id="pfp" name="pfp" accept="image/*"><br><br>
+    </div>
+
+    {{ recaptcha }} <br>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Update Details</button>
+</form>
+
+{% endblock %}

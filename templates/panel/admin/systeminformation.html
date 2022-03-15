@@ -1,0 +1,101 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Systtem Information
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<ul class="nav nav-tabs">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#currentid">System Information</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#errorlogs">CPU Information</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#inputlogs">Memory Information</a>
+    </li>
+
+</ul>
+
+<div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="currentid">
+        <br><br>
+        <h2 class="center-text">System Information</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in info %}
+                <tr>
+                    <td>{{x}}</td>
+                    <td>{{info[x]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="tab-pane fade show" id="errorlogs">
+        <br><br>
+        <h2 class="center-text">CPU Information</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in cpu_info %}
+                <tr>
+                    <td>{{x}}</td>
+                    <td>{{cpu_info[x]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+        <br>
+    </div>
+
+    <div class="tab-pane fade show" id="inputlogs">
+        <br><br>
+        <h2 class="center-text">Memory Information</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in memory_info %}
+                <tr>
+                    <td>{{x}}</td>
+                    <td>{{memory_info[x]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+    </div>
+
+</div>
+
+{% endblock %}

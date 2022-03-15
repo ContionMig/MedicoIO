@@ -1,0 +1,141 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Security
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Password Settings</h2>
+    <small class="text-muted">Update the Security Settings here</small>
+</div>
+
+<ul class="nav nav-tabs">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#basic_security">Basic Security</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#2fa">2 Factor Authentication</a>
+    </li>
+
+</ul>
+
+<div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="basic_security">
+
+        <br>
+        <h6>Changing Password</h6>
+        <small>Change your password here</small>
+        <hr>
+
+        <form action="{{ url_for('panel_security') }}" method="POST">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="hidden" name="action" value="basic_security" />
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="old_pass">Old Password</label>
+                <input name="old_pass" type="password" id="old_pass" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="new_pass">New Password</label>
+                <input name="new_pass" type="password" id="new_pass" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="new_pass_again">New Password</label>
+                <input name="new_pass_again" type="password" id="new_pass_again" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Change Password</button>
+        </form>
+
+    </div>
+
+    <div class="tab-pane fade show" id="2fa">
+        <br><br>
+        <div class="container">
+            <div class="row">
+                
+                {% if otp %}
+                <div class="col-sm" align="center">
+                    <br>
+                    <img src="{{ qrcode(factor_url)  }}">
+                </div>
+                <div class="col-sm">
+                    <div class="newsletter-subscribe">
+                        <div class="container">
+                            <div class="intro">
+                                <h2 class="text-center">Turn on 2 Factor Authentication</h2>
+                                <p class="text-center">Protect your account by adding a 2 factor authentication. This
+                                    requires you to input a 6 digit code before being able to sucessfully log in. Scan
+                                    the QR Code on the left using Authy or other apps and input the 6 digit code you
+                                    see.</p>
+                            </div>
+                            <form class="form-inline" method="post">
+
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                                <input type="hidden" name="action" value="2fa" />
+                                <input type="hidden" name="otp_code" value="{{otp}}" />
+
+                                <div class="form-group" style="width: 80%; float: left;">
+                                    <input class="form-control" type="number" name="otp" placeholder="6 Digit Code">
+                                </div>
+
+                                <div class="form-group" style="width: 18%; float: right;">
+                                    <button class="btn btn-primary" type="submit">Enable </button>
+                                </div>
+                            </form>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+                {% else %}
+
+                <div class="newsletter-subscribe">
+                    <div class="container">
+                        <div class="intro">
+                            <h2 class="text-center">Turn off 2 Factor Authentication</h2>
+                            <p class="text-center">You can turn off your 2FA hwoever it will make your accont less secure.</p>
+                        </div>
+                        <form class="form-inline" method="post">
+
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <input type="hidden" name="action" value="2fa" />
+
+                            <div class="form-group" style="width: 80%; float: left;">
+                                <input class="form-control" type="number" name="otp" placeholder="6 Digit Code">
+                            </div>
+
+                            <div class="form-group" style="width: 18%; float: right;">
+                                <button class="btn btn-danger" type="submit">Disable </button>
+                            </div>
+                        </form>
+                    </div>
+                    <br><br>
+                </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

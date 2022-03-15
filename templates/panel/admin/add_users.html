@@ -1,0 +1,97 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Admin Panel | Users
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Add Users</h2>
+    <small class="text-muted">Add any new Users in here</small>
+</div>
+
+<form action="{{ url_for('admin_create') }}" method="POST">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <h6>Login Details</h6>
+    <hr>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="nric">NRIC</label>
+                <input name="nric" type="text" id="nric" class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="password">Password</label>
+                <input name="password" type="password" id="password" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="col">
+        <div class="form-outline">
+            <label class="form-label" for="user_level">User Level</label>
+            <select name="user_level" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="2">Patient</option>
+                <option value="1">Doctor</option>
+                <option value="0">Administrator</option>
+            </select>
+        </div>
+    </div>
+
+    <br><br>
+    <h6>Personal Details</h6>
+    <hr>
+
+    <div class="row mb-4">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="f_name">First name</label>
+                    <input name="f_name" type="text" id="f_name"
+                        class="form-control" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="l_name">Last name</label>
+                    <input name="l_name" type="text" id="l_name"
+                        class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="contact">Gender</label>
+                <select name="gender" class="form-select"
+                    aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+
+    <br>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Add User</button>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Admin Panel | Doctors
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>All Doctors</h2>
+    <small class="text-muted">Manage all of your doctors here</small>
+</div>
+
+
+<form method="GET" class="form-inline my-2 my-lg-0">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+    <small>NRIC</small><br>
+    <input {% if search is not none %} value="{{search}}" {% endif %} style="width: 90%; float:left"
+        class="form-control mr-sm-2" type="search" name="search" placeholder="T019483X" aria-label="Search">
+    <button style="width: 10%; padding-left: 2px; height: 34px;" class="btn btn-outline-success my-2 my-sm-0"
+        type="submit">Search</button>
+</form> <br><br>
+
+
+<div class="row clearfix">
+
+    {%for i in range(0, all_users|len)%}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card all-doctors">
+            <div class="body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 text-center m-b-0" style="width: 160px;">
+                        <img src="{{ url_for('show', uid=all_users[i].id()) }}" alt="user" class="img-thumbnail"
+                            style="max-width: 150px;width: 150px;height: 150px;"></a>
+                    </div>
+                    <div class="col-md-8 col-sm-8 m-b-0" style="width: 150px;">
+                        <h5 class="m-b-0">{{ all_users[i].details.get_fname() }}
+                            {{ all_users[i].details.get_lname() }}</i></a></h5>
+                        <small>{{ all_users[i].details.get_gender() }}</small>
+                        <address class="m-b-0">
+                            {{ all_users[i].details.get_addr()|mask }}<br>
+                            +65 {{ all_users[i].details.get_contact() }} <br>
+                            {{ all_users[i].details.get_email() }}
+                        </address>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+
+                    <div class="col">
+                        <form action="{{ url_for('doc_view_patients', uid=all_users[i].id()) }}" method="GET">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <button type="submit" class="btn btn-primary btn-block mb-4" style="min-width: 30%;">View
+                                Doctor</button>
+                        </form>
+                    </div>
+
+                    <div class="col">
+                        <form action="{{ url_for('doc_update', user_id=all_users[i].id()) }}" method="GET">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <button type="submit" class="btn btn-warning btn-block mb-4" style="min-width: 30%;">Update
+                                Doctor</button>
+                        </form>
+                    </div>
+
+                    <div class="col">
+                        <form action="{{ url_for('admin_doctors') }}" method="POST">
+                            <input type="hidden" name="type" value="delete">
+                            <input type="hidden" name="userid" value="{{ all_users[i].id() }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                            <button type="submit" class="btn btn-danger btn-block mb-4" style="min-width: 30%;">Delete
+                                Doctor</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+
+
+</div>
+
+<form action="{{ url_for('admin_create') }}" method="GET">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <button type="submit" class="btn btn-primary btn-block mb-4">Add Doctors</button>
+</form>
+
+<br><br>
+
+{% with purge_type="user", purge_level=1 %}
+{% include 'includes/purge_logs.html' %}
+{% endwith %}
+
+{% endblock %}

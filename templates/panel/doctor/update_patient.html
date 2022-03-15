@@ -1,0 +1,137 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Patient Details
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h5 class="m-b-0">{{ paitent.details.get_fname() }} {{ paitent.details.get_lname() }}</i></a></h5>
+    <small>{{ paitent.details.get_gender() }} | {{ paitent.details.get_nric()|mask }}</small>
+</div> <br>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="f_name">First name</label>
+                <input value="{{ paitent.details.get_fname() }}" name="f_name" type="text" id="f_name"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="l_name">Last name</label>
+                <input value="{{ paitent.details.get_lname() }}" name="l_name" type="text" id="l_name"
+                    class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="contact">Gender</label>
+                <select name="gender" class="form-select" aria-label="Default select example">
+                    <option {% if paitent.details.get_gender() == "Male" %} selected {% endif %} value="Male">Male
+                    </option>
+                    <option {% if paitent.details.get_gender() == "Female" %} selected {% endif %} value="Female">Female
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="contact">Blood Type</label>
+                <select name="blood" class="form-select" aria-label="Default select example">
+                    <option {% if paitent.details.get_blood() == "O" %} selected {% endif %} value="O">O</option>
+                    <option {% if paitent.details.get_blood() == "A" %} selected {% endif %} value="A">A</option>
+                    <option {% if paitent.details.get_blood() == "B" %} selected {% endif %} value="B">B</option>
+                    <option {% if paitent.details.get_blood() == "AB" %} selected {% endif %} value="AB">AB</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="contact">Phone</label>
+                <input value="{{ paitent.details.get_contact() }}" name="contact" type="number" id="contact"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="email">Email</label>
+                <input value="{{ paitent.details.get_email() }}" name="email" type="email" id="email"
+                    class="form-control" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="height">Height (CM)</label>
+                <input value="{{ paitent.details.get_height() }}" name="height" type="number" id="height"
+                    class="form-control" min="90" max="300" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="weight">Weight (KG)</label>
+                <input value="{{ paitent.details.get_weight() }}" name="weight" type="number" id="weight"
+                    class="form-control" min="40" max="400" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+                <label class="form-label" for="dob">Date of Birth</label>
+                <input value="{{ paitent.details.get_dob() }}" name="dob" type="date" id="dob" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col">
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="addr">Postal Code</label>
+                <input value="{{ paitent.details.get_postal_code()|mask }}" name="addr__" type="text" id="addr" class="form-control" readonly/>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="addr">Area</label>
+                <input value="{{ paitent.details.get_area()|mask }}" name="addr__" type="text" id="addr" class="form-control" readonly/>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="addr">Address</label>
+                <input value="{{ paitent.details.get_addr()|mask }}" name="addr__" type="text" id="addr" class="form-control" readonly/>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Update Details</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+    {% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Panel | Backup Settings
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assets/backup.css' ) }}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Backup Table</h2>
+    <small class="text-muted">These are the backups:</small>
+</div>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th scope="col">ID</th>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Backup File</th>
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+
+        {%for i in range(0, backups|len)%}
+
+        <tr>
+            <th scope="row">{{ i }}</th>
+            <td>{{ backups[i]|bk_time|timec }}</td>
+            <td>{{ backups[i] }}</td>
+            <td> 
+
+                <form action="{{ url_for('admin_backup') }}" method="POST" style = "display:inline-block">
+                    <input type="hidden" name="type" value="restore">
+                    <input type="hidden" name="backupid" value="{{ backups[i] }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                    <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                </form>
+
+                <form action="{{ url_for('admin_backup') }}" method="POST" style = "display:inline-block">
+                    <input type="hidden" name="type" value="delete">
+                    <input type="hidden" name="backupid" value="{{ backups[i] }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </form>
+
+            </td>
+        </tr>
+
+        {%endfor%}
+
+    </tbody>
+</table>
+
+
+<form action="{{ url_for('admin_backup') }}" method="POST">
+    <input type="hidden" name="type" value="create">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <button type="submit" class="btn btn-primary btn-block mb-4">Backup Now</button>
+</form>
+
+
+
+{% endblock %}

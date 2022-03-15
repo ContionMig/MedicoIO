@@ -1,0 +1,47 @@
+{% extends 'core/panel.html' %}
+
+{% block title %}
+MedicoIO | Admin Panel | Users
+{% endblock %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="block-header">
+    <h2>Access Control</h2>
+    <small class="text-muted">Update and Control different access control here</small>
+</div>
+
+
+<form action="{{ url_for('admin_view_access') }}" method="POST">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="set_type" value="items">
+
+    {% for acc in access %}
+
+    <div class="form-outline mb-4">
+        <label for="groups">Function: {{acc}}</label>
+
+        <select name="{{acc}}" class="form-select" aria-label="multiple select example" multiple>
+            <option {% if "-1" in acc|access_control %} selected {% endif %} value="-1">Non-User</option>
+            <option {% if "2" in acc|access_control %} selected {% endif %} value="2">Patients</option>
+            <option {% if "1" in acc|access_control %} selected {% endif %} value="1">Doctor</option>
+            <option {% if "0" in acc|access_control %} selected {% endif %} value="0">Admins</option>
+        </select>
+    </div>
+
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary btn-block mb-4">Update Settings</button>
+</form>
+
+
+
+
+
+{% endblock %}
